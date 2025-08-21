@@ -1,79 +1,7 @@
 import { createClient as createServerClient } from "@/lib/supabase/server"
 import { createClient as createClientClient } from "@/lib/supabase/client"
 import { sampleEvents } from "./sample-data"
-
-export interface Event {
-  id: string
-  title: string
-  description: string
-  date: string
-  time: string
-  category: string
-  image_url: string | null
-  rsvp_url: string
-  location: {
-    venue: string
-    address: string
-    city: string
-  }
-  host: {
-    name: string
-    bio: string
-    experience: string
-    avatar: string | null
-  }
-  map_embed_url: string
-  created_at: string
-}
-
-export interface CreateEventData {
-  title: string
-  description: string
-  date: string
-  time: string
-  category: string
-  venue: string
-  address: string
-  city: string
-  image_url?: string
-  rsvp_url: string
-  map_embed_url: string
-  host_id: string
-}
-
-export interface RSVP {
-  id: string
-  event_id: string
-  user_id: string
-  status: "attending" | "maybe" | "not_attending"
-  created_at: string
-}
-
-function convertSampleEvents(): Event[] {
-  return sampleEvents.map((event) => ({
-    id: event.id,
-    title: event.title,
-    description: event.description,
-    date: event.date,
-    time: event.time,
-    category: event.category,
-    image_url: event.imageUrl,
-    rsvp_url: event.rsvpUrl,
-    location: {
-      venue: event.location.venue,
-      address: event.location.address,
-      city: event.location.city,
-    },
-    host: {
-      name: event.host.name,
-      bio: event.host.bio,
-      experience: event.host.experience,
-      avatar: event.host.avatar,
-    },
-    map_embed_url: event.mapEmbedUrl,
-    created_at: new Date().toISOString(),
-  }))
-}
+import type { Event, CreateEventData, RSVP } from "./types"
 
 export async function getEvents(): Promise<Event[]> {
   try {
@@ -457,6 +385,32 @@ export async function getEventsClient(): Promise<Event[]> {
     console.log("Falling back to sample data. Please run the database migration script.")
     return convertSampleEvents()
   }
+}
+
+function convertSampleEvents(): Event[] {
+  return sampleEvents.map((event) => ({
+    id: event.id,
+    title: event.title,
+    description: event.description,
+    date: event.date,
+    time: event.time,
+    category: event.category,
+    image_url: event.imageUrl,
+    rsvp_url: event.rsvpUrl,
+    location: {
+      venue: event.location.venue,
+      address: event.location.address,
+      city: event.location.city,
+    },
+    host: {
+      name: event.host.name,
+      bio: event.host.bio,
+      experience: event.host.experience,
+      avatar: event.host.avatar,
+    },
+    map_embed_url: event.mapEmbedUrl,
+    created_at: new Date().toISOString(),
+  }))
 }
 
 export const categories = [

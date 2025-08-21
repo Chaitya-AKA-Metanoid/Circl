@@ -10,7 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Input } from "@/components/ui/input"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { ExternalLink, Search } from "lucide-react"
-import { categories, type Event } from "@/lib/database"
+import { categories, type Event } from "@/lib/types"
 
 export function EventsClient({ events }: { events: Event[] }) {
   const [searchQuery, setSearchQuery] = useState("")
